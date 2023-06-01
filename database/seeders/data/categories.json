@@ -1,0 +1,34 @@
+[
+  {
+    "name": "Eletrônicos",
+    "description": "Produtos eletrônicos de última geração para sua casa e escritório."
+  },
+  {
+    "name": "Moda",
+    "description": "Roupas, calçados e acessórios para todos os estilos e ocasiões."
+  },
+  {
+    "name": "Beleza",
+    "description": "Cosméticos, maquiagens e produtos para cuidados pessoais."
+  },
+  {
+    "name": "Casa e Decoração",
+    "description": "Artigos para decoração de interiores e itens para sua casa."
+  },
+  {
+    "name": "Esportes e Fitness",
+    "description": "Equipamentos esportivos e produtos para exercícios e bem-estar."
+  },
+  {
+    "name": "Livros",
+    "description": "Livros de diversos gêneros e temas para leitura e conhecimento."
+  },
+  {
+    "name": "Brinquedos",
+    "description": "Brinquedos e jogos para todas as idades e momentos de diversão."
+  },
+  {
+    "name": "Joias e Acessórios",
+    "description": "Joias elegantes e acessórios sofisticados para complementar seu estilo."
+  }
+]

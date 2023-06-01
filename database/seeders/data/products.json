@@ -1,0 +1,130 @@
+[
+  {
+    "name": "Smart TV 55-inch",
+    "price": 59.99,
+    "description": "Experience high-definition entertainment with this 55-inch Smart TV.",
+    "category": 1,
+    "likes": 512,
+    "sales": 237
+  },
+  {
+    "name": "Wireless Bluetooth Headphones",
+    "price": 34.99,
+    "description": "Enjoy wireless freedom and exceptional sound quality with these Bluetooth headphones.",
+    "category": 2,
+    "likes": 256,
+    "sales": 421
+  },
+  {
+    "name": "Moisturizing Body Lotion",
+    "price": 19.99,
+    "description": "Indulge your skin with this moisturizing body lotion, enriched with natural ingredients.",
+    "category": 3,
+    "likes": 128,
+    "sales": 752
+  },
+  {
+    "name": "Decorative Ceramic Vase",
+    "price": 49.99,
+    "description": "Add a touch of elegance to your home decor with this beautiful ceramic vase.",
+    "category": 4,
+    "likes": 342,
+    "sales": 193
+  },
+  {
+    "name": "Men's Running Shoes",
+    "price": 79.99,
+    "description": "Achieve your running goals in style and comfort with these high-performance shoes.",
+    "category": 5,
+    "likes": 412,
+    "sales": 527
+  },
+  {
+    "name": "Best-Selling Mystery Novel",
+    "price": 14.99,
+    "description": "Embark on a thrilling journey with this captivating best-selling mystery novel.",
+    "category": 6,
+    "likes": 198,
+    "sales": 635
+  },
+  {
+    "name": "Kids' Interactive Toy Set",
+    "price": 24.99,
+    "description": "Spark your child's imagination with this interactive toy set, designed for hours of fun.",
+    "category": 7,
+    "likes": 75,
+    "sales": 325
+  },
+  {
+    "name": "Diamond Pendant Necklace",
+    "price": 149.99,
+    "description": "Make a statement with this exquisite diamond pendant necklace, a true symbol of elegance.",
+    "category": 8,
+    "likes": 632,
+    "sales": 87
+  },
+  {
+    "name": "Ultra HD Action Camera",
+    "price": 129.99,
+    "description": "Capture your adventures in stunning detail with this feature-packed Ultra HD action camera.",
+    "category": 1,
+    "likes": 324,
+    "sales": 154
+  },
+  {
+    "name": "Women's Designer Handbag",
+    "price": 249.99,
+    "description": "Complete your outfit with this luxurious designer handbag, crafted from premium materials.",
+    "category": 2,
+    "likes": 432,
+    "sales": 213
+  },
+  {
+    "name": "Natural Bamboo Bath Towel Set",
+    "price": 39.99,
+    "description": "Wrap yourself in softness with this eco-friendly bamboo bath towel set.",
+    "category": 3,
+    "likes": 245,
+    "sales": 398
+  },
+  {
+    "name": "Wall-Mounted Mirror with LED Lights",
+    "price": 79.99,
+    "description": "Illuminate your space and enhance your grooming routine with this stylish wall-mounted mirror.",
+    "category": 4,
+    "likes": 321,
+    "sales": 176
+  },
+  {
+    "name": "Wireless Gaming Mouse",
+    "price": 59.99,
+    "description": "Gain a competitive edge with this high-performance wireless gaming mouse.",
+    "category": 5,
+    "likes": 189,
+    "sales": 419
+  },
+  {
+    "name": "Classic Literature Collection",
+    "price": 49.99,
+    "description": "Immerse yourself in timeless masterpieces with this curated collection of classic literature.",
+    "category": 6,
+    "likes": 537,
+    "sales": 312
+  },
+  {
+    "name": "Building Blocks Set",
+    "price": 29.99,
+    "description": "Encourage creativity and problem-solving skills with this versatile building blocks set.",
+    "category": 7,
+    "likes": 94,
+    "sales": 217
+  },
+  {
+    "name": "Silver Bracelet with Gemstone",
+    "price": 89.99,
+    "description": "Add a touch of sophistication to your look with this elegant silver bracelet featuring a stunning gemstone.",
+    "category": 8,
+    "likes": 421,
+    "sales": 105
+  }
+]
