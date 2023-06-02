@@ -17,7 +17,8 @@ class CartProductFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'product_id' => fake()->numberBetween(1, 16),
+            'cart_id' => fake()->numberBetween(1, 10)
         ];
     }
 }

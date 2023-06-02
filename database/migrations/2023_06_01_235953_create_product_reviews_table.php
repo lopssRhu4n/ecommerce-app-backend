@@ -16,8 +16,8 @@ return new class extends Migration
             $table->foreignId('product_id')->constrained();
             $table->foreignId('client_id')->constrained();
             $table->integer('rating');
-            $table->string('title', 20);
-            $table->string('body', 255);
+            $table->string('title', 100);
+            $table->string('body', 500);
             $table->integer('likes');
             $table->timestamps();
         });

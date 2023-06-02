@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class CartFactory extends Factory
 {
+    protected $user_id = 0;
+
     /**
      * Define the model's default state.
      *
@@ -16,9 +18,10 @@ class CartFactory extends Factory
      */
     public function definition(): array
     {
+        $this->user_id++;
         return [
             'amount' => fake()->randomFloat(2, 0, 10000),
-            'client_id' => fake()->numberBetween(1, 10),
+            'client_id' => $this->user_id,
             'shipping' => fake()->randomFloat(2, 0, 100),
             'discount' => fake()->numberBetween(0, 50)
         ];

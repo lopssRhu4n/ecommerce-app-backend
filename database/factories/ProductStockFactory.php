@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class ProductStockFactory extends Factory
 {
+    protected  $product_id = 0;
+
     /**
      * Define the model's default state.
      *
@@ -17,7 +19,8 @@ class ProductStockFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'product_id' => ++$this->product_id,
+            'quantity' => fake()->numberBetween(1, 40)
         ];
     }
 }
