@@ -18,7 +18,16 @@ class ProductSeeder extends Seeder
         $data = json_decode(Storage::get('products.json'));
 
         foreach ($data as $item) {
-            Product::create($data);
+            Product::create(
+                [
+                    'name' => $item->name,
+                    'description' => $item->description,
+                    'price' => $item->price,
+                    'category_id' => $item->category,
+                    'likes' => $item->likes,
+                    'sales' => $item->sales
+                ]
+            );
         }
         //
     }

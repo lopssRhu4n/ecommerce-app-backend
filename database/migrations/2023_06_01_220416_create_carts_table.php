@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('carts', function (Blueprint $table) {
             $table->id();
+            $table->float('amount');
+            $table->float('shipping');
+            $table->foreignId('client_id')->constrained();
+            $table->float('discount');
             $table->timestamps();
         });
     }

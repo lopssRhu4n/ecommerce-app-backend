@@ -6,17 +6,20 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class ProductStock extends Model
+class ClientAddress extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'product_id',
-        'quantity'
+        'cep',
+        'city',
+        'number',
+        'street'
     ];
 
-    public function product(): BelongsTo
+
+    public function client(): BelongsTo
     {
-        return $this->belongsTo(Product::class);
+        return $this->belongsTo(Client::class);
     }
 }

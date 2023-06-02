@@ -13,6 +13,11 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
+            $table->uuid();
+            $table->foreignId('client_id')->constrained();
+            $table->float('total_amount');
+            $table->string('deliver_status');
+
             $table->timestamps();
         });
     }
