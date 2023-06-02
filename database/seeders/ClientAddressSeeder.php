@@ -12,6 +12,6 @@ class ClientAddressSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        \App\Models\ClientAddress::factory(10)->create();
     }
 }

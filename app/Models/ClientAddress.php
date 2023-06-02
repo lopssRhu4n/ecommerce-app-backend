@@ -14,7 +14,9 @@ class ClientAddress extends Model
         'cep',
         'city',
         'number',
-        'street'
+        'street',
+        'complement',
+        'client_id'
     ];
 
 

@@ -13,7 +13,6 @@ class Cart extends Model
 
     protected $fillable = [
         'amount',
-        'state',
         'client_id',
         'shipping',
         'discount'

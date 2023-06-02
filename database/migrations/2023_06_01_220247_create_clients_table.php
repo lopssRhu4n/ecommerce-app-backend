@@ -17,7 +17,7 @@ return new class extends Migration
             $table->date('birthdate');
             $table->string('email', 50);
             $table->string('cpf', 11);
-            $table->string('phone', 15);
+            $table->string('phone', 30);
             $table->timestamps();
         });
     }

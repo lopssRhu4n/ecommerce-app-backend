@@ -10,16 +10,15 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Order extends Model
 {
-    use HasUuids;
     use HasFactory;
 
     protected $fillable = [
         'amount',
         'client_id',
         'total_amount',
+        'shipping',
         'client_address_id',
         'deliver_status'
-
     ];
 
     public function client(): BelongsTo
