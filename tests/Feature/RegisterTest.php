@@ -23,7 +23,7 @@ class RegisterTest extends TestCase
         $phone = fake()->phoneNumber();
 
         //Act
-        $return = $this->post(route('client/register'), [
+        $response = $this->postJson('/api/register/client', [
             'name' => $name,
             'email' => $email,
             'cpf' => $cpf,
@@ -33,9 +33,13 @@ class RegisterTest extends TestCase
 
 
         //Assert
-        $return->assertSuccessful();
+        $response
+            ->assertStatus(201)
+            ->assertJson([
+                'created' => true
+            ]);
 
-        $this->assertDatabaseHas('users', [
+        $this->assertDatabaseHas('clients', [
             'name' => $name,
             'email' => $email,
             'cpf' => $cpf,
@@ -44,4 +48,56 @@ class RegisterTest extends TestCase
 
         ]);
     }
+
+    /** @test */
+    public function name_should_be_required()
+    {
+        $this->postJson('/api/register/client', [])
+            ->assertStatus(400)
+            ->assertJsonFragment(['name' => ["The name field is required."]]);
+    }
+
+    /** @test */
+    public function email_should_be_required()
+    {
+        $this->postJson('/api/register/client', ['name' => 'test'])
+            ->assertStatus(400)
+            ->assertJsonFragment(['email' => ["The email field is required."]]);
+    }
+
+    /** @test */
+    public function email_should_be_unique()
+    {
+        $this->postJson('/api/register/client', ['email' => 'xablau@email.com'])
+            ->assertStatus(400)
+            ->assertJsonFragment(['email' => ['Email should be unique']]);
+    }
+
+    /** @test */
+    public function cpf_should_be_required()
+    {
+        $this->postJson('/api/register/client', [])->assertStatus(400)->assertJsonFragment(['cpf' => ["The cpf field is required."]]);
+    }
+
+    /** @test */
+    public function birthdate_should_be_required()
+    {
+        $this->postJson('/api/register/client', [])->assertStatus(400)->assertJsonFragment(['birthdate' => ["The birthdate field is required."]]);
+    }
+
+    /** @test */
+    public function phone_should_be_required()
+    {
+        $this->postJson('/api/register/client', [])->assertStatus(400)->assertJsonFragment(['phone' => ["The phone field is required."]]);
+    }
+
+    // /** @test */
+    // public function it_should_be_able_to_show_registered_user()
+    // {
+    //     //act
+    //     $response = $this->getJson('api/client/1');
+    //
+    //     //assert
+    //     $response->assertStatus(200);
+    // }
 }
