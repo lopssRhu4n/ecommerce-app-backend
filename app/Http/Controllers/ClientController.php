@@ -16,13 +16,13 @@ class ClientController extends BaseController
         try {
             $validated = $req->validate([
                 'name' =>  ['required'],
-                'email' => ['required', 'unique:clients'],
-                'cpf' => ['required'],
+                'email' => ['required', 'unique:clients', 'email'],
+                'cpf' => ['required', 'unique:clients'],
                 'birthdate' => ['required'],
                 'phone' => ['required'],
-            ]);
+            ], [ 'cpf.unique' => 'CPF already registered.']);
 
-            Client::create(
+            Client::query()->create(
                 [
                     'name' => $validated['name'],
                     'email' => $validated['email'],
