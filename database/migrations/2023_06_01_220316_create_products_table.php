@@ -19,6 +19,7 @@ return new class extends Migration
             $table->foreignId('category_id')->constrained();
             $table->integer('likes');
             $table->integer('sales');
+            $table->string('image')->nullable();
             $table->timestamps();
         });
     }

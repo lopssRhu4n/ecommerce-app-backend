@@ -1,17 +1,15 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Client;
 
-use App\Models\Client;
-use Illuminate\Http\JsonResponse;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Http\JsonResponse;
+use App\Models\Client;
 
-class ClientController extends BaseController
+class CreateController extends Controller
 {
-
-
-    public function store(Request $req): JsonResponse
+    public function __invoke(Request $req): JsonResponse
     {
         try {
             $validated = $req->validate([
@@ -20,7 +18,7 @@ class ClientController extends BaseController
                 'cpf' => ['required', 'unique:clients'],
                 'birthdate' => ['required'],
                 'phone' => ['required'],
-            ], [ 'cpf.unique' => 'CPF already registered.']);
+            ], ['cpf.unique' => 'CPF already registered.']);
 
             Client::query()->create(
                 [
@@ -35,17 +33,6 @@ class ClientController extends BaseController
             return response()->json(['created' => true], 201);
         } catch (\Illuminate\Validation\ValidationException $th) {
             return response()->json(['Errors' => $th->errors()], 400);
-        }
-    }
-
-
-    public function show(string $id): JsonResponse
-    {
-        try {
-            $client = Client::findOrFail($id);
-            return response()->json(['Client' => $client]);
-        } catch (\Throwable $th) {
-            return response()->json(['Error' => $th], 400);
         }
     }
 }

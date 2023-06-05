@@ -17,7 +17,8 @@ class CategoryFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            "name" => "Testar",
+            "description" => "Apenas para uso de testes",
         ];
     }
 }

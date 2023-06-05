@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\Product;
+use App\Http\Controllers\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -19,5 +21,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('register/client', [ClientController::class, 'store']);
+Route::post('register/client', Client\CreateController::class);
 Route::get('client/{id}', [ClientController::class, 'show']);
+
+Route::post('/product/create', Product\CreateController::class);
