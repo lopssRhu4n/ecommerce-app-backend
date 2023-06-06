@@ -115,7 +115,8 @@ class CreateTest extends TestCase
             "sales" => 0,
             "image" => UploadedFile::fake()->image("product1.pdf")
         ])
-            ->assertStatus(400);
+            ->assertStatus(400)
+            ->assertJsonFragment(["image" => ["The image field must be a file of type: png, jpg, jpeg, gif.", "The image field must be an image."]]);
 
         // assert
     }
