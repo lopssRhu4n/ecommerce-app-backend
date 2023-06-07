@@ -13,13 +13,16 @@ class IndexTest extends TestCase
     public function it_should_list_all_of_the_created_products()
     {
         // arrange
-        $products = Product::all();
+        $this->seed();
+        $products_quantity = Product::all()->count();
+        $products = Product::all()->all();
 
         // act
 
-        $this->post('/api/product')
-            // assert
+        $this->get('/api/product/')
             ->assertStatus(200)
-            ->assertJson($products);
+            ->assertJsonFragment([
+            "quantity" => $products_quantity,
+        ]);
     }
 }

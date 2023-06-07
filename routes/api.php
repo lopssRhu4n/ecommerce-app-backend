@@ -26,4 +26,8 @@ Route::prefix('client')->group(function () {
     Route::get('{id}', [ClientController::class, 'show']);
 });
 
-Route::post('/product/create', Product\CreateController::class);
+Route::prefix('product')->group(function () {
+    Route::post('create', Product\CreateController::class);
+    Route::get('', Product\IndexController::class);
+    Route::put('update/{id}', Product\UpdateController::class);
+});
