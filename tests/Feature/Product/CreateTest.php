@@ -3,11 +3,13 @@
 namespace Tests\Feature\Product;
 
 use App\Models\Category;
+use App\Models\Product;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Testing\Fluent\AssertableJson;
 use Tests\TestCase;
 
 class CreateTest extends TestCase
@@ -30,27 +32,32 @@ class CreateTest extends TestCase
         Category::factory()->createOne();
 
         $user = User::factory()->createOne();
+        $productData = Product::factory(1)->makeOne()->toArray();
 
         $this->actingAs($user);
 
-        $testProductData = [
-            "name" => "Produto de Teste",
-            "description" => "Produto criado para fins de teste",
-            "price" => 100.00,
-            "category_id" => 1,
-            "likes" => 0,
-            "sales" => 0
-        ];
-
         // act
 
-        $response = $this->post($this->testUrl, $testProductData);
+        $response = $this->postJson($this->testUrl, $productData);
 
         // assert
 
 
         $response->assertStatus(201);
-        $this->assertDatabaseHas('products', $testProductData);
+        $this->assertDatabaseHas('products', $productData);
+
+        $response->assertJson(function (AssertableJson $json) use ($productData) {
+
+            $json->whereAll([
+                'created' => true,
+                'product.name' => $productData['name'],
+                'product.description' => $productData['description'],
+                'product.price' => $productData['price'],
+                'product.category_id' => $productData['category_id'],
+                'product.sales' => $productData['sales'],
+                'product.likes' => $productData['likes'],
+            ]);
+        });
     }
 
     /** @test */

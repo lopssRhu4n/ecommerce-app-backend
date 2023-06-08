@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Models\Client;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Testing\Fluent\AssertableJson;
 use Tests\TestCase;
 
 class RegisterTest extends TestCase
@@ -13,41 +14,36 @@ class RegisterTest extends TestCase
     /** @test */
     public function it_should_be_able_to_register_as_a_new_client()
     {
-        // test body
         // Arrange
 
-        $name = fake()->name();
-        $email = fake()->email();
-        $cpf = fake()->numberBetween(10000000000, 99999999999);
-        $birthdate = fake()->date();
-        $phone = fake()->phoneNumber();
+        $clientData = Client::factory(1)->makeOne()->toArray();
 
         //Act
-        $response = $this->postJson('/api/client/register', [
-
-            'name' => $name,
-            'email' => $email,
-            'cpf' => $cpf,
-            'birthdate' => $birthdate,
-            'phone' => $phone
-        ]);
-
+        $response = $this->postJson(
+            '/api/client/register',
+            $clientData
+        );
 
         //Assert
         $response
             ->assertStatus(201)
-            ->assertJson([
-                'created' => true
-            ]);
+            ->assertJson(function (AssertableJson $json) use ($clientData) {
+                $json->whereAll(
+                    [
+                        'created' => true,
+                        'client.name' => $clientData['name'],
+                        'client.email' => $clientData['email'],
+                        'client.cpf' => $clientData['cpf'],
+                        'client.birthdate' => $clientData['birthdate'],
+                        'client.phone' => $clientData['phone']
+                    ]
+                );
+            });
 
-        $this->assertDatabaseHas('clients', [
-            'name' => $name,
-            'email' => $email,
-            'cpf' => $cpf,
-            'birthdate' => $birthdate,
-            'phone' => $phone
-
-        ]);
+        $this->assertDatabaseHas(
+            'clients',
+            $clientData
+        );
     }
 
     /** @test */

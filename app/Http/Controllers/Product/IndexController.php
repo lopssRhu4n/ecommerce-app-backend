@@ -11,9 +11,8 @@ class IndexController extends Controller
 {
     public function __invoke(): JsonResponse
     {
-        return response()->json([
-            "quantity" => Product::all()->count(),
-            "products" => Product::all()->all()
-        ]);
+        return response()->json(
+            Product::all()
+        );
     }
 }
