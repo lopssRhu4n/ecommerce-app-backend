@@ -8,12 +8,15 @@ use Tests\TestCase;
 
 class DeleteTest extends TestCase
 {
-    /**
-     * A basic feature test example.
-     */
-    public function test_example(): void
+    /** @test */
+    public function it_should_be_able_to_delete_a_product()
     {
-        $response = $this->get('/');
+
+        $this->seed();
+
+        $response = $this->deleteJson('/api/product/delete/1');
+
+        // assert
 
         $response->assertStatus(200);
     }

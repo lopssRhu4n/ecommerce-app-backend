@@ -6,6 +6,7 @@ use App\Models\Product;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Testing\Fluent\AssertableJson;
 use Tests\TestCase;
 
 class UpdateTest extends TestCase
@@ -17,19 +18,22 @@ class UpdateTest extends TestCase
         $this->actingAs($user);
 
         $this->seed();
+        $id = 1;
+        $updateData = ["name" => "Changed", "description" => "For update test"];
 
-        // act
+        $response = $this->putJson("api/product/update/1", $updateData);
 
-        $response = $this->putJson('api/product/update/1', [
-            "name" => "Changed",
-            "description" => "For update test",
-        ]);
+        $product = Product::query()->find($id)->toArray();
 
-        $updatedProduct = Product::where('id', 1)->first();
-        // assert
+        $response->assertStatus(200);
+        $this->assertDatabaseHas('products', $updateData);
 
-        $response->assertStatus(204);
-        $this->assertEquals('Changed', $updatedProduct->name);
-        $this->assertEquals('For update test', $updatedProduct->description);
+        $response->assertJson(function (AssertableJson $json) use ($product) {
+            $json->whereAll([
+                'name' => $product['name'],
+                'description' => $product['description']
+            ])
+                ->etc();
+        });
     }
 }

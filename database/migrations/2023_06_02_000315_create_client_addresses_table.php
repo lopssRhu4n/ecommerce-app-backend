@@ -18,7 +18,7 @@ return new class extends Migration
             $table->integer('number');
             $table->string('city', 50);
             $table->string('complement', 100);
-            $table->foreignId('client_id')->constrained();
+            $table->foreignId('client_id')->noActionOnDelete();
             $table->timestamps();
         });
     }

@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name', 50);
             $table->string('description', 255);
             $table->float('price');
-            $table->foreignId('category_id')->constrained();
+            $table->foreignId('category_id')->cascadeOnDelete();
             $table->integer('likes');
             $table->integer('sales');
             $table->string('image')->nullable();

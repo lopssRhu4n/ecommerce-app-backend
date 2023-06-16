@@ -11,8 +11,9 @@ class UpdateController extends Controller
 {
     public function __invoke(Request $request, int $id): JsonResponse
     {
-        $updated = Product::query()->where('id', $id)->update($request->all());
+        $product = Product::query()->find($id);
+        $product->update($request->all());
 
-        return response()->json(["updated" => $updated], 204);
+        return response()->json($product);
     }
 }

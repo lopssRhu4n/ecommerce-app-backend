@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->float('amount');
             $table->float('shipping');
-            $table->foreignId('client_id')->constrained();
+            $table->foreignId('client_id')->noActionOnDelete();
             $table->float('discount');
             $table->timestamps();
         });

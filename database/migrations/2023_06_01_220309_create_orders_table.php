@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('client_id')->constrained();
+            $table->foreignId('client_id')->noActionOnDelete();
             $table->float('amount');
             $table->float('shipping');
             $table->float('total_amount');

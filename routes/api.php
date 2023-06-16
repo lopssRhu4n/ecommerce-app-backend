@@ -31,4 +31,5 @@ Route::prefix('product')->group(function () {
     Route::get('', Product\IndexController::class);
     Route::get('/{id}', Product\ShowController::class);
     Route::put('update/{id}', Product\UpdateController::class);
+    Route::delete('delete/{id}', Product\DeleteController::class);
 });
