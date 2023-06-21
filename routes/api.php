@@ -3,6 +3,7 @@
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\Product;
 use App\Http\Controllers\Client;
+use App\Http\Controllers\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -33,3 +34,5 @@ Route::prefix('product')->group(function () {
     Route::put('update/{id}', Product\UpdateController::class);
     Route::delete('delete/{id}', Product\DeleteController::class);
 });
+
+Route::post('/login', Auth\LoginController::class);
