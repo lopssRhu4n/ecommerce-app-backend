@@ -15,7 +15,7 @@ class LoginTest extends TestCase
     public function it_should_be_able_to_login_with_right_credentials()
     {
         // arrange
-        User::factory()->create([
+        $user = User::factory()->create([
             'email' => 'teste@gmail.com',
             'password' => Hash::make('12345678')
         ]);
@@ -26,8 +26,20 @@ class LoginTest extends TestCase
 
         // assert
 
-        $response->assertStatus(200);
+        $token = $response->json()['auth_token'];
 
+        $userToken = $user->tokens()->get()->toArray()[0];
+
+        $response
+            ->assertStatus(200);
+
+        $this->assertDatabaseHas(
+            'personal_access_tokens',
+            [
+                "id" => $userToken['id'],
+                "tokenable_id" => $userToken['tokenable_id']
+            ]
+        );
     }
 
     /** @test */
@@ -54,15 +66,12 @@ class LoginTest extends TestCase
 
         // act
 
-        $response = $this->postJson('/api/login', [ 'email' => $credentials['email'], 'password' => 'Not passing']);
+        $response = $this->postJson('/api/login', ['email' => $credentials['email'], 'password' => 'Not passing']);
         // assert
 
         $response
             ->assertStatus(404)
             ->assertJsonFragment(['Error' => "Passwords don't match!"]);
-
-
-
     }
 
     /** @test */
@@ -103,6 +112,5 @@ class LoginTest extends TestCase
         $response
             ->assertStatus(200)
             ->assertJsonPath('id', 1);
-
     }
 }

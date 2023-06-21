@@ -35,3 +35,4 @@ Route::prefix('product')->group(function () {
 });
 
 Route::post('/login', Auth\LoginController::class);
+Route::delete('/logout', Auth\LogoutController::class)->middleware('auth:sanctum');
