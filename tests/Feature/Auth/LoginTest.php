@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Hash;
+use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
 class LoginTest extends TestCase
@@ -61,6 +62,47 @@ class LoginTest extends TestCase
             ->assertJsonFragment(['Error' => "Passwords don't match!"]);
 
 
+
+    }
+
+    /** @test */
+    public function it_should_not_be_able_to_request_guarded_route_without_token()
+    {
+        // arrange
+
+
+        // act
+
+
+        $response = $this->getJson('/api/client/1');
+
+
+        // assert
+
+        $response
+            ->assertStatus(401)
+            ->assertJsonFragment(["message" => "Unauthenticated."]);
+    }
+
+    /** @test */
+    public function it_should_be_able_to_request_guarded_route_with_valid_token()
+    {
+        // arrange
+
+        $this->seed();
+        $user = User::factory()->createOne();
+
+        $token = $user->createToken('auth')->plainTextToken;
+        // act
+
+        $response = $this->withHeaders([
+            "Authorization" => "Bearer $token"
+        ])->getJson('/api/client/1');
+        // assert
+
+        $response
+            ->assertStatus(200)
+            ->assertJsonPath('id', 1);
 
     }
 }

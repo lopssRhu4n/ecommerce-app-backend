@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\ClientController;
 use App\Http\Controllers\Product;
 use App\Http\Controllers\Client;
 use App\Http\Controllers\Auth;
@@ -24,7 +23,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::prefix('client')->group(function () {
     Route::post('register', Client\CreateController::class);
-    Route::get('{id}', [ClientController::class, 'show']);
+    Route::get('{id}', Client\ShowController::class)->middleware('auth:sanctum');
 });
 
 Route::prefix('product')->group(function () {
