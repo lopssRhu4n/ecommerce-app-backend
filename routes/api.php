@@ -3,6 +3,7 @@
 use App\Http\Controllers\Product;
 use App\Http\Controllers\Client;
 use App\Http\Controllers\Auth;
+use App\Http\Controllers\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -24,6 +25,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::prefix('client')->group(function () {
     Route::post('register', Client\CreateController::class);
     Route::get('{id}', Client\ShowController::class)->middleware('auth:sanctum');
+});
+
+Route::prefix('user')->group(function () {
+    Route::post('', User\CreateController::class);
 });
 
 Route::prefix('product')->group(function () {
