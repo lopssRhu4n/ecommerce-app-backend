@@ -4,6 +4,7 @@ use App\Http\Controllers\Product;
 use App\Http\Controllers\Client;
 use App\Http\Controllers\Auth;
 use App\Http\Controllers\User;
+use App\Http\Controllers\Cart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -41,3 +42,8 @@ Route::prefix('product')->group(function () {
 
 Route::post('/login', Auth\LoginController::class);
 Route::delete('/logout', Auth\LogoutController::class)->middleware('auth:sanctum');
+
+Route::prefix('/cart')->group(function () {
+    Route::post('', Cart\CreateController::class);
+    Route::post('/product', Cart\AddProductToCart::class);
+});
