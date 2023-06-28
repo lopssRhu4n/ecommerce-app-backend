@@ -13,8 +13,9 @@ class ShowController extends Controller
 
         try {
             $client = Client::query()->where('id', $id)->first();
+            $cart = $client->cart();
 
-            return response()->json($client);
+            return response()->json(["client" => $client, "cart" => $cart]);
         } catch (\Throwable $th) {
             return response()->json(['Error' => $th->getMessage()], $th->getCode());
         }

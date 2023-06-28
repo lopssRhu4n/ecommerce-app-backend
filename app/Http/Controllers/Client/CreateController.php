@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
+use App\Models\Cart;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use App\Models\Client;
@@ -21,6 +22,8 @@ class CreateController extends Controller
             ], ['cpf.unique' => 'CPF already registered.']);
 
             $clientData = Client::query()->create($validated)->toArray();
+
+            Cart::query()->create(['client_id' => $clientData['id'], 'amount' => 0, 'shipping' => 0, 'discount' => 0]);
 
             return response()->json(['created' => true, 'client' => $clientData], 201);
         } catch (\Illuminate\Validation\ValidationException $th) {

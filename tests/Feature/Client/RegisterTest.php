@@ -44,6 +44,16 @@ class RegisterTest extends TestCase
             'clients',
             $clientData
         );
+
+        $this->assertDatabaseHas(
+            'carts',
+            [
+                "client_id" => 1,
+                "amount" => 0,
+                "discount" => 0,
+                "shipping" => 0
+            ]
+        );
     }
 
     /** @test */

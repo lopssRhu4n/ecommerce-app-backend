@@ -25,6 +25,6 @@ class ShowTest extends TestCase
 
         $response->assertStatus(200);
 
-        $response->assertJsonPath('id', 1);
+        $response->assertJsonPath('client.id', 1);
     }
 }

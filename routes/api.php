@@ -44,6 +44,5 @@ Route::post('/login', Auth\LoginController::class);
 Route::delete('/logout', Auth\LogoutController::class)->middleware('auth:sanctum');
 
 Route::prefix('/cart')->group(function () {
-    Route::post('', Cart\CreateController::class);
     Route::post('/product', Cart\AddProductToCart::class);
 });
