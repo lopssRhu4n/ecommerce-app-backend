@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Client;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -31,7 +32,15 @@ class LoginController extends Controller
                 throw ValidationException::withMessages(['password' => "Passwords don't match!"]);
             }
 
-            return response()->json(['auth_token' => $user->createToken('auth')->plainTextToken], 200);
+            $clientData = Client::query()->find($user->id);
+            $cartData = $clientData->cart;
+            $cartData->products;
+
+            return response()->json(
+                [
+                    'auth_token' => $user->createToken('auth')->plainTextToken,
+                    'client' => $clientData,
+                ], 200);
         } catch (\Throwable $err) {
             return response()->json(['Error' => $err->getMessage()], 404);
         }

@@ -2,6 +2,8 @@
 
 namespace Tests\Feature\Auth;
 
+use App\Models\Cart;
+use App\Models\Client;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -20,6 +22,8 @@ class LoginTest extends TestCase
             'password' => Hash::make('12345678')
         ]);
 
+        Client::factory()->createOne();
+        Cart::factory()->create(['client_id' => 1, 'amount' => 0, 'shipping' => 0, 'discount' => 0]);
         // act
 
         $response = $this->postJson('/api/login', ['email' => 'teste@gmail.com', 'password' => '12345678']);
@@ -111,6 +115,6 @@ class LoginTest extends TestCase
 
         $response
             ->assertStatus(200)
-            ->assertJsonPath('id', 1);
+            ->assertJsonPath('client.id', 1);
     }
 }

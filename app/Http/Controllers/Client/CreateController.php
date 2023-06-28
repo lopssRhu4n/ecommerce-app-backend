@@ -21,9 +21,12 @@ class CreateController extends Controller
                 'phone' => ['required'],
             ], ['cpf.unique' => 'CPF already registered.']);
 
-            $clientData = Client::query()->create($validated)->toArray();
+            $clientCollection= Client::query()->create($validated);
 
-            Cart::query()->create(['client_id' => $clientData['id'], 'amount' => 0, 'shipping' => 0, 'discount' => 0]);
+            Cart::query()->create(['client_id' => $clientCollection->id, 'amount' => 0, 'shipping' => 0, 'discount' => 0])->toArray();
+
+            $clientCollection->cart;
+            $clientData = $clientCollection->toArray();
 
             return response()->json(['created' => true, 'client' => $clientData], 201);
         } catch (\Illuminate\Validation\ValidationException $th) {

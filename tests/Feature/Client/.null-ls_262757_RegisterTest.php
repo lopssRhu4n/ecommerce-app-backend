@@ -24,9 +24,15 @@ class RegisterTest extends TestCase
             $clientData
         );
 
-
         //Assert
         $response
+            ->assertJsonPath('client.cart' => [
+                "client_id" => 1,
+                "amount" => 0,
+                "discount" => 0,
+                "shipping" => 0
+            ]
+)
             ->assertStatus(201);
 
 
