@@ -10,8 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
-|--------------------------------------------------------------------------
-| API Routes
+|-------------------------------------------------------------------------- | API Routes
 |--------------------------------------------------------------------------
 |
 | Here is where you can register API routes for your application. These
@@ -46,6 +45,7 @@ Route::delete('/logout', Auth\LogoutController::class)->middleware('auth:sanctum
 
 Route::prefix('/cart')->group(function () {
     Route::post('/product', Cart\AddProductToCart::class);
+    Route::get('/{id}', Cart\ShowController::class);
 });
 
 Route::prefix('/category')->group(function () {
