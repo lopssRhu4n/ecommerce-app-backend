@@ -5,6 +5,7 @@ use App\Http\Controllers\Client;
 use App\Http\Controllers\Auth;
 use App\Http\Controllers\User;
 use App\Http\Controllers\Cart;
+use App\Http\Controllers\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -45,4 +46,9 @@ Route::delete('/logout', Auth\LogoutController::class)->middleware('auth:sanctum
 
 Route::prefix('/cart')->group(function () {
     Route::post('/product', Cart\AddProductToCart::class);
+});
+
+Route::prefix('/category')->group(function () {
+    Route::get('', Category\IndexController::class);
+    Route::get('/{id}', Category\ShowController::class);
 });
