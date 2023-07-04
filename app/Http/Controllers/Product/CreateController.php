@@ -63,7 +63,7 @@ class CreateController extends Controller
             ->storeAs(
                 'product',
                 request()->file('image')->getClientOriginalName(),
-                ['disk' => 's3']
+                ['disk' => 'public']
             );
     }
 }

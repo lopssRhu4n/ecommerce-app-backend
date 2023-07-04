@@ -5,8 +5,6 @@ namespace Tests\Feature\Product;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Testing\Fluent\AssertableJson;
@@ -77,7 +75,7 @@ class CreateTest extends TestCase
     public function it_should_be_able_to_upload_product_image()
     {
         // arrange
-        Storage::fake('s3');
+        Storage::fake('public');
 
         Category::factory()->createOne();
         $user = User::factory()->createOne();
@@ -96,7 +94,7 @@ class CreateTest extends TestCase
 
         // assert
 
-        Storage::disk('s3')->assertExists('product/product1.png');
+        Storage::disk('public')->assertExists('product/product1.png');
 
         $this->assertDatabaseHas('products', [
             'image' => 'product/product1.png'
@@ -106,7 +104,7 @@ class CreateTest extends TestCase
     /** @test */
     public function it_should_return_error_if_image_is_invalid_type()
     {
-        Storage::fake('s3');
+        Storage::fake('public');
 
         Category::factory()->createOne();
         $user = User::factory()->createOne();
