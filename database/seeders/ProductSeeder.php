@@ -17,6 +17,11 @@ class ProductSeeder extends Seeder
         $data = json_decode(Storage::get('products.json'));
 
         foreach ($data as $item) {
+            if(property_exists($item,'image')) {
+                $image = $item->image;
+            } else {
+                $image = 'product/default.png';
+            }
             Product::create(
                 [
                     'name' => $item->name,
@@ -24,7 +29,8 @@ class ProductSeeder extends Seeder
                     'price' => $item->price,
                     'category_id' => $item->category,
                     'likes' => $item->likes,
-                    'sales' => $item->sales
+                    'sales' => $item->sales,
+                    'image' => $image
                 ]
             );
         }
