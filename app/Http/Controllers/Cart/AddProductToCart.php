@@ -17,29 +17,34 @@ class AddProductToCart extends Controller
                 'product_id' => 'required|int'
             ]);
 
+            $cart = Cart::query()->find($validated['cart_id']);
+
+            if (auth('sanctum')->id() != $cart->client->user_id) {
+                return response()->json(['message' => 'Forbidden.'], 403);
+            }
+
             CartProduct::query()->create($validated);
 
-            $cart = Cart::query()->find($validated['cart_id']);
 
             $products = $cart->products;
 
             $this->updateCartAmount($cart, $products);
 
             return response()->json(["created" => true, "cart" => $cart, "cart_products" => $cart->products], 201);
-        } catch (\Illuminate\Validation\ValidationException $th){
-           return response()->json(["Error" => $th->errors()], 400);
+        } catch (\Illuminate\Validation\ValidationException $th) {
+            return response()->json(["Error" => $th->errors()], 400);
         }
     }
 
     public function updateCartAmount($cart, $products)
     {
-         $cartAmount = 0;
+        $cartAmount = 0;
 
-            foreach ($products as $product) {
-                $cartAmount += $product->price;
-            }
+        foreach ($products as $product) {
+            $cartAmount += $product->price;
+        }
 
-            $cart->amount = $cartAmount;
-            $cart->save();
+        $cart->amount = $cartAmount;
+        $cart->save();
     }
 }

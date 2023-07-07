@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class ClientFactory extends Factory
 {
+    protected $user_id = 0;
     /**
      * Define the model's default state.
      *
@@ -16,11 +17,12 @@ class ClientFactory extends Factory
      */
     public function definition(): array
     {
+        $this->user_id++;
         return [
             'cpf' => fake()->numberBetween(10000000000, 99999999999),
             'birthdate' => fake()->date(),
             'phone' => fake()->phoneNumber(),
-            'user_id' => 1
+            'user_id' => $this->user_id
         ];
     }
 }

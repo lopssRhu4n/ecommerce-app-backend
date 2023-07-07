@@ -30,6 +30,7 @@ Route::prefix('client')->group(function () {
 
 Route::prefix('user')->group(function () {
     Route::post('', User\CreateController::class);
+    Route::get('/{id}', User\ShowController::class)->middleware('auth:sanctum');
 });
 
 Route::prefix('product')->group(function () {
@@ -44,7 +45,7 @@ Route::post('/login', Auth\LoginController::class);
 Route::delete('/logout', Auth\LogoutController::class)->middleware('auth:sanctum');
 
 Route::prefix('/cart')->group(function () {
-    Route::post('/product', Cart\AddProductToCart::class);
+    Route::post('/product', Cart\AddProductToCart::class)->middleware('auth:sanctum');
     Route::get('/{id}', Cart\ShowController::class);
 });
 
