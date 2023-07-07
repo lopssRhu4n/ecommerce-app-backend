@@ -32,14 +32,13 @@ class LoginController extends Controller
                 throw ValidationException::withMessages(['password' => "Passwords don't match!"]);
             }
 
-            $clientData = Client::query()->find($user->id);
-            $cartData = $clientData->cart;
-            $cartData->products;
+
+            $user->client->cart->products;
 
             return response()->json(
                 [
                     'auth_token' => $user->createToken('auth')->plainTextToken,
-                    'client' => $clientData,
+                    'data' => $user->toArray(),
                 ], 200);
         } catch (\Throwable $err) {
             return response()->json(['Error' => $err->getMessage()], 404);

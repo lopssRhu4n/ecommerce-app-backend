@@ -30,7 +30,6 @@ class LoginTest extends TestCase
 
         // assert
 
-        $token = $response->json()['auth_token'];
 
         $userToken = $user->tokens()->get()->toArray()[0];
 

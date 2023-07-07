@@ -38,8 +38,7 @@ class Client extends Model
         return $this->hasOne(Cart::class)->withDefault(function (Cart $cart, Client $client) {
             $client
               ->cart()
-              ->create(['amount' => 0, 'discount' => 0, 'shipping' => 0])
-              ->toArray();
+              ->create(['amount' => 0, 'discount' => 0, 'shipping' => 0])->get();
         });
 }
 }

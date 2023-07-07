@@ -24,8 +24,7 @@ class CreateController extends Controller
 
             $userCollection
                 ->client()
-                ->create($validated)
-                ->cart();
+                ->create($validated);
 
             $userCollection->client->cart;
 
