@@ -3,10 +3,19 @@
 namespace Tests\Feature;
 
 use App\Models\Client;
+use App\Models\User;
 use Tests\TestCase;
 
 class RegisterTest extends TestCase
 {
+
+    public $fakeUserData;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+        $this->fakeUserData = array_merge(User::factory()->makeOne()->toArray(), ['password' => 12345678]);
+    }
 
     /** @test */
     public function it_should_be_able_to_register_as_a_new_client()
@@ -14,11 +23,12 @@ class RegisterTest extends TestCase
         // Arrange
 
         $clientData = Client::factory(1)->makeOne()->toArray();
+        $fullData = array_merge($clientData, $this->fakeUserData);
 
         //Act
         $response = $this->postJson(
             '/api/client/register',
-            $clientData
+            $fullData
         );
 
 
@@ -39,6 +49,13 @@ class RegisterTest extends TestCase
                 "amount" => 0,
                 "discount" => 0,
                 "shipping" => 0
+            ]
+        );
+
+        $this->assertDatabaseHas(
+            'personal_access_tokens',
+            [
+                'id' => 1
             ]
         );
     }
@@ -62,8 +79,10 @@ class RegisterTest extends TestCase
     /** @test */
     public function email_should_be_unique()
     {
-        Client::factory()->create(["email" => "test@gmail.com"]);
-        $this->postJson('/api/client/register', ["email" => "test@gmail.com"])
+        User::factory()->create(["email" => "test@gmail.com"]);
+        $response = $this->postJson('/api/client/register', ["email" => "test@gmail.com"]);
+
+        $response
             ->assertStatus(400)
             ->assertJsonFragment(['email' => ['The email has already been taken.']]);
     }
@@ -79,7 +98,8 @@ class RegisterTest extends TestCase
     /** @test */
     public function cpf_should_be_required()
     {
-        $this->postJson('/api/client/register', [])->assertStatus(400)->assertJsonFragment(['cpf' => ["The cpf field is required."]]);
+        $response = $this->postJson('/api/client/register', $this->fakeUserData);
+        $response->assertStatus(400)->assertJsonFragment(['cpf' => ["The cpf field is required."]]);
     }
 
     /** @test */
@@ -87,7 +107,7 @@ class RegisterTest extends TestCase
     {
 
         Client::factory()->create(['cpf' => 98765432111]);
-        $this->postJson('/api/client/register', ['cpf' => 98765432111])
+        $this->postJson('/api/client/register', array_merge($this->fakeUserData,['cpf' => 98765432111]))
             ->assertStatus(400)
             ->assertJsonFragment(["cpf" => ["CPF already registered."]]);
     }
@@ -95,12 +115,12 @@ class RegisterTest extends TestCase
     /** @test */
     public function birthdate_should_be_required()
     {
-        $this->postJson('/api/client/register', [])->assertStatus(400)->assertJsonFragment(['birthdate' => ["The birthdate field is required."]]);
+        $this->postJson('/api/client/register', $this->fakeUserData)->assertStatus(400)->assertJsonFragment(['birthdate' => ["The birthdate field is required."]]);
     }
 
     /** @test */
     public function phone_should_be_required()
     {
-        $this->postJson('/api/client/register', [])->assertStatus(400)->assertJsonFragment(['phone' => ["The phone field is required."]]);
+        $this->postJson('/api/client/register', $this->fakeUserData)->assertStatus(400)->assertJsonFragment(['phone' => ["The phone field is required."]]);
     }
 }

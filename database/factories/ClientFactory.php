@@ -17,11 +17,10 @@ class ClientFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->name(),
-            'email' => fake()->email(),
             'cpf' => fake()->numberBetween(10000000000, 99999999999),
             'birthdate' => fake()->date(),
             'phone' => fake()->phoneNumber(),
+            'user_id' => 1
         ];
     }
 }

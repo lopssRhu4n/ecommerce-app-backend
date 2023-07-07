@@ -12,9 +12,8 @@ class Client extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name',
-        'email',
         'cpf',
+        'user_id',
         'birthdate',
         'phone'
     ];
@@ -36,6 +35,11 @@ class Client extends Model
 
     public function cart(): HasOne
     {
-        return $this->hasOne(Cart::class);
-    }
+        return $this->hasOne(Cart::class)->withDefault(function (Cart $cart, Client $client) {
+            $client
+              ->cart()
+              ->create(['amount' => 0, 'discount' => 0, 'shipping' => 0])
+              ->toArray();
+        });
+}
 }

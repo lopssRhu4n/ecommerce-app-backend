@@ -3,34 +3,53 @@
 namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
-use App\Models\Cart;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
-use App\Models\Client;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class CreateController extends Controller
 {
     public function __invoke(Request $req): JsonResponse
     {
         try {
+
+            $userCollection = $this->createUser($req);
+
             $validated = $req->validate([
-                'name' =>  ['required'],
-                'email' => ['required', 'unique:clients', 'email'],
                 'cpf' => ['required', 'unique:clients'],
                 'birthdate' => ['required'],
                 'phone' => ['required'],
             ], ['cpf.unique' => 'CPF already registered.']);
 
-            $clientCollection= Client::query()->create($validated);
+            $userCollection
+                ->client()
+                ->create($validated)
+                ->cart();
 
-            Cart::query()->create(['client_id' => $clientCollection->id, 'amount' => 0, 'shipping' => 0, 'discount' => 0])->toArray();
+            $userCollection->client->cart;
 
-            $clientCollection->cart;
-            $clientData = $clientCollection->toArray();
-
-            return response()->json(['created' => true, 'client' => $clientData], 201);
+            return response()->json([
+                'created' => true,
+                'data' => $userCollection->toArray(),
+                'auth_token' => $userCollection->createToken('auth')->plainTextToken,
+            ], 201);
         } catch (\Illuminate\Validation\ValidationException $th) {
             return response()->json(['Errors' => $th->errors()], 400);
         }
+    }
+
+
+    public function createUser(Request $req)
+    {
+        $validatedUserData = $req->validate([
+            'name' =>  ['required'],
+            'email' => ['required', 'unique:users', 'email'],
+            'password' => ['required'],
+        ]);
+
+        $validatedUserData['password'] = Hash::make($validatedUserData['password']);
+
+        return User::query()->create($validatedUserData);
     }
 }
