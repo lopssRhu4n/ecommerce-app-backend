@@ -20,7 +20,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
 });
 
 Route::prefix('client')->group(function () {
@@ -31,6 +30,7 @@ Route::prefix('client')->group(function () {
 Route::prefix('user')->group(function () {
     Route::post('', User\CreateController::class);
     Route::get('/{id}', User\ShowController::class)->middleware('auth:sanctum');
+    Route::get('', User\UserByTokenController::class)->middleware('auth:sanctum');
 });
 
 Route::prefix('product')->group(function () {
